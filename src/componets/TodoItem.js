@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { BsTrash, BsSave2 } from 'react-icons/bs';
 import { AiOutlineCheck, AiFillEdit } from 'react-icons/ai';
 
-const Todo = ({
-  task, todo, completeTodo, deleteTodo, EditTodo,
+const TodoItem = ({
+  task, todo, completeTodo, deleteTodo, editTodo,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editTask, setEditTask] = useState(task);
@@ -15,12 +15,12 @@ const Todo = ({
       setEditTask(task);
     }
     if (editTask !== task && editTask !== '') {
-      EditTodo(editTask, todo);
+      editTodo(editTask, todo);
     }
   };
 
   return (
-    <div className="todo">
+    <>
       <li className={`todo-item  ${todo.completed ? 'completed' : ''}`}>
         {isEditing ? (
           <form className="todo-edit">
@@ -36,17 +36,21 @@ const Todo = ({
           </form>
         ) : `${editTask}`}
       </li>
-      <button type="button" onClick={() => setIsEditing(!isEditing)} className="edit-btn">
-        <AiFillEdit />
-      </button>
-      <button type="button" onClick={() => completeTodo(todo)} className="complete-btn">
-        <AiOutlineCheck />
-      </button>
-      <button type="button" onClick={() => deleteTodo(todo)} className="trash-btn">
-        <BsTrash />
-      </button>
-    </div>
+      <div className="todo-buttons__container">
+        <button type="button" onClick={() => setIsEditing(!isEditing)} className="edit-btn">
+          <AiFillEdit />
+        </button>
+        <button type="button" onClick={() => completeTodo(todo)} className="complete-btn">
+          <AiOutlineCheck />
+        </button>
+        <button type="button" onClick={() => deleteTodo(todo)} className="trash-btn">
+          <BsTrash />
+        </button>
+      </div>
+      <hr />
+
+    </>
   );
 };
 
-export default Todo;
+export default TodoItem;

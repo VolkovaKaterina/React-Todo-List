@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { v4 as uuid } from 'uuid';
-import todoApi from '../api/todoApi';
+import {
+  get, create, update, remove,
+} from '../api/TodoService';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 
@@ -9,15 +10,19 @@ const App = () => {
   const [todos, setTodos] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
   const [filterTodos, setFilterTodos] = useState([]);
-  const uniqueId = uuid();
-  const smallId = uniqueId.slice(0, 6);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => { setHeight(document.documentElement.scrollHeight); });
 
   useEffect(() => {
-    const getTodos = async () => {
-      const response = await todoApi.get('/todos');
-      setTodos(response.data);
-    };
-    getTodos();
+    (async () => {
+      try {
+        const { data } = await get();
+        setTodos(data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
   useEffect(() => {
@@ -36,24 +41,16 @@ const App = () => {
   const addTodo = async () => {
     if (input) {
       try {
-        const newTodo = await todoApi.post('/todos', {
-          task: input,
-          completed: false,
-          id: smallId,
-        });
-
-        if (newTodo.statusText === 'Created') {
-          setTodos([...todos, newTodo.data]);
-        }
+        const { data } = await create({ task: input, completed: false });
+        setTodos([...todos, data]);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
   };
   const completeTodo = async (todo) => {
     try {
-      await todoApi.put(`/todos/${todo.id}`, { ...todo, completed: !todo.completed });
-
+      await update(todo.id, { ...todo, completed: !todo.completed });
       setTodos(todos.map((item) => {
         if (item.id === todo.id) {
           return { ...item, completed: !item.completed };
@@ -61,13 +58,12 @@ const App = () => {
         return item;
       }));
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
-  const EditTodo = async (value, todo) => {
+  const editTodo = async (value, todo) => {
     try {
-      await todoApi.patch(`/todos/${todo.id}`, { task: value });
-
+      await update(todo.id, { ...todo, task: value });
       setTodos(todos.map((item) => {
         if (item.id === todo.id) {
           return { ...item, task: value };
@@ -75,22 +71,21 @@ const App = () => {
         return item;
       }));
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const deleteTodo = async (todo) => {
     try {
-      await todoApi.delete(`/todos/${todo.id}`);
-
+      await remove(todo.id);
       setTodos(todos.filter((item) => item.id !== todo.id));
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={{ height: `${height}px` }}>
       <TodoForm
         addTodo={addTodo}
         input={input}
@@ -101,7 +96,7 @@ const App = () => {
         filterTodos={filterTodos}
         completeTodo={completeTodo}
         deleteTodo={deleteTodo}
-        EditTodo={EditTodo}
+        editTodo={editTodo}
       />
 
     </div>

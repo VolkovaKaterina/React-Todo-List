@@ -1,20 +1,20 @@
 import React from 'react';
 import './Todoform.css';
-import Todo from './Todo';
+import TodoItem from './TodoItem';
 
 const TodoList = ({
-  filterTodos, completeTodo, deleteTodo, EditTodo,
+  filterTodos, completeTodo, deleteTodo, editTodo,
 }) => (
   <div className="todo-container">
     <ul className="todo-list">
       {filterTodos.map(((todo) => (
-        <Todo
+        <TodoItem
           key={todo.id}
           todo={todo}
           task={todo.task}
           completeTodo={completeTodo}
           deleteTodo={deleteTodo}
-          EditTodo={EditTodo}
+          editTodo={editTodo}
         />
       )))}
     </ul>
