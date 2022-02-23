@@ -20,8 +20,8 @@ const TodoItem = ({
   };
 
   return (
-    <>
-      <li className={`todo-item  ${todo.completed ? 'completed' : ''}`}>
+    <li className="todo">
+      <div className={`todo-item  ${todo.completed ? 'completed' : ''}`}>
         {isEditing ? (
           <form className="todo-edit">
             <input
@@ -35,21 +35,17 @@ const TodoItem = ({
             </button>
           </form>
         ) : `${editTask}`}
-      </li>
-      <div className="todo-buttons__container">
-        <button type="button" onClick={() => setIsEditing(!isEditing)} className="edit-btn">
-          <AiFillEdit />
-        </button>
-        <button type="button" onClick={() => completeTodo(todo)} className="complete-btn">
-          <AiOutlineCheck />
-        </button>
-        <button type="button" onClick={() => deleteTodo(todo)} className="trash-btn">
-          <BsTrash />
-        </button>
       </div>
-      <hr />
-
-    </>
+      <button type="button" onClick={() => setIsEditing(!isEditing)} className="edit-btn">
+        <AiFillEdit />
+      </button>
+      <button type="button" onClick={() => completeTodo(todo)} className="complete-btn">
+        <AiOutlineCheck />
+      </button>
+      <button type="button" onClick={() => deleteTodo(todo)} className="trash-btn">
+        <BsTrash />
+      </button>
+    </li>
   );
 };
 

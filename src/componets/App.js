@@ -14,15 +14,13 @@ const App = () => {
 
   useEffect(() => { setHeight(document.documentElement.scrollHeight); });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await get();
-        setTodos(data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+  useEffect(async () => {
+    try {
+      const { data } = await get();
+      setTodos(data);
+    } catch (err) {
+      console.error(err);
+    }
   }, []);
 
   useEffect(() => {
@@ -86,6 +84,7 @@ const App = () => {
 
   return (
     <div className="wrapper" style={{ height: `${height}px` }}>
+      <h1 className="todo-list__title">Create your Task</h1>
       <TodoForm
         addTodo={addTodo}
         input={input}

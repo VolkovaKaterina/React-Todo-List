@@ -9,16 +9,21 @@
     background: linear-gradient(90deg, rgba(48,235,211,1) 0%, rgba(30,209,186,1) 35%, rgba(30,84,242,1) 100%);
     color: white;
     font-family: "Roboto Light", sans-serif;
+    min-height: 100vh;
 }
-
+.todo-list__title{
+    text-align: center;
+    padding-top: 2rem;
+}
 .todo-form {
-    min-height: 20vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
-
+.todo-form__input{
+    max-width: 90%;
+}
 .todo-form__input,
 .todo-form__button {
     padding: 0.5rem;
@@ -83,28 +88,23 @@
 
 .todo-list {
     min-width: 40%;
-    height: 60px;
     list-style: none;
-
 }
 
-.todo-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    height: 60px;
-    margin: 1rem;
+.todo {
+    margin: 0.5rem;
     background: white;
     font-size: 1.5rem;
     color: black;
-    word-break: break-all;
-    overflow-wrap: break-word;
-}
-.todo-buttons__container{
     display: flex;
-    padding: 0.5rem 1rem;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
+    transition: all 1s ease;
+}
+
+.todo-item {
+    flex: 1;
+    padding: 0 1rem;
 }
 
 .todo-edit__input {
