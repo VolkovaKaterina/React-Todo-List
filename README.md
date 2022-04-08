@@ -18,12 +18,12 @@ In the project directory run:
   yarn start
  
 ```
-## Json-Server 
-Install
+## Json-Server
+## Install
 ```bash
  npm install -g json-server
  ```
-In the Terminal, move to the folder with the db.json file then run
-```bash
-json-server --watch db.json --port 3004
-    
+## Start
+
+1. navigate to db folder: ```cd db```
+2. ```json-server --watch db.json --port 3004```
